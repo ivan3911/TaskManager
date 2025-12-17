@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace TaskManager.Data.Repository
 {
 
@@ -22,9 +24,10 @@ namespace TaskManager.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Entities.Task>> GetAllTasks()
+        public async Task<IEnumerable<Entities.Task>> GetAllTasks()
         {
-            throw new NotImplementedException();
+            var tasks = await _context.Tasks.ToListAsync();
+            return tasks;
         }
 
         public Task<Entities.Task?> GetTaskById(int id)
