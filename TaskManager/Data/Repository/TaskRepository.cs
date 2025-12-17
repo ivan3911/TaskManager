@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace TaskManager.Data.Repository
 {
@@ -14,14 +15,18 @@ namespace TaskManager.Data.Repository
             _context = context;
         }
 
-        public System.Threading.Tasks.Task AddTask(Entities.Task task)
+        public async Task<Entities.Task> AddTask(Entities.Task task)
         {
-            throw new NotImplementedException();
+            task.CreationDate = DateTime.Now;
+            EntityEntry<Entities.Task> entityEntry = await _context.Tasks.AddAsync(task);
+            await _context.SaveChangesAsync();
+            return entityEntry.Entity;
         }
 
-        public System.Threading.Tasks.Task DeleteTask(int id)
+        public async Task DeleteTask(Entities.Task task)
         {
-            throw new NotImplementedException();
+            _context.Tasks.Remove(task);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Entities.Task>> GetAllTasks()
@@ -31,13 +36,16 @@ namespace TaskManager.Data.Repository
         }
 
         public Task<Entities.Task?> GetTaskById(int id)
-        {
-            throw new NotImplementedException();
+        { 
+            var task = _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
+            return task;
         }
 
-        public System.Threading.Tasks.Task UpdateTask(Entities.Task task)
+        public async Task UpdateTask(Entities.Task task)
         {
-            throw new NotImplementedException();
+            task.CreationDate = DateTime.Now;
+            _context.Tasks.Update(task);
+            await _context.SaveChangesAsync();
         }
     }
 }
