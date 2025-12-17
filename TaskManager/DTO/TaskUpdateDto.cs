@@ -5,13 +5,13 @@ namespace TaskManager.DTO
 {
     public class TaskUpdateDto
     {
-        [Required(ErrorMessage = "El titulo es obligatorio")]
-        [MaxLength(80, ErrorMessage = "El numero maximo de caracteres es de 80")]
+        //[Required(ErrorMessage = "El titulo es obligatorio")]
+        //[MaxLength(80, ErrorMessage = "El numero maximo de caracteres es de 80")]
         public string Title { get; set; } = string.Empty;
 
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "El status es obligatorio")]
+        //[Required(ErrorMessage = "El status es obligatorio")]
         public Task_Status Status { get; set; }
     }
 }

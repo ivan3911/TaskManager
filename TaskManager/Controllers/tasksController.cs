@@ -18,9 +18,10 @@ namespace TaskManager.Controllers
             _mapper = mapper;
         }
 
+        
 
         [HttpPost]
-        public async Task<Entities.Task> Post(TaskInsertDto taskInsertDto)
+        public async Task<Entities.Task> Post([FromBody] TaskInsertDto taskInsertDto)
         {
             var task = _mapper.Map<Entities.Task>(taskInsertDto);
 
@@ -55,7 +56,7 @@ namespace TaskManager.Controllers
 
 
         [HttpPut("{taskId:int}", Name = "Put")]
-        public async Task<ActionResult> Put(TaskUpdateDto taskUpdateDto, int taskId)
+        public async Task<ActionResult> Put([FromBody] TaskUpdateDto taskUpdateDto, int taskId)
         {
 
             var task = await _taskRepository.GetTaskById(taskId);
@@ -91,6 +92,13 @@ namespace TaskManager.Controllers
 
             return Ok();
 
+        }
+
+        [HttpGet("test-error")]
+        public IActionResult TestError()
+        {                                            // Middleware funcionando!!
+            throw new Exception("Error de prueba!!");  //captura excepciones no controladas asi que este mensaje nunca aparece
+                                                       // en la respuesta entregada, aparecera un "500 Error interno del servidor".
         }
     }
 }
