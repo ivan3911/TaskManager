@@ -18,18 +18,23 @@ namespace TaskManager.Controllers
             _mapper = mapper;
         }
 
-        
+
 
         [HttpPost]
-        public async Task<Entities.Task> Post([FromBody] TaskInsertDto taskInsertDto)
+        [ProducesResponseType(statusCode: StatusCodes.Status201Created)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<Entities.Task>> Post([FromBody] TaskInsertDto taskInsertDto)
         {
             var task = _mapper.Map<Entities.Task>(taskInsertDto);
+            var newrecord = await _taskRepository.AddTask(task); 
 
-            var newrecord = await _taskRepository.AddTask(task);
-            return newrecord;
+            return Created($"api/tasks/{task.Id}",newrecord);
         }
 
         [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllTasks()
         {
             var tasks = await _taskRepository.GetAllTasks();
@@ -38,11 +43,14 @@ namespace TaskManager.Controllers
             {
                 listataskDto.Add(_mapper.Map<TaskDto>(task));
             }
-            return Ok(listataskDto);   
+            return Ok(listataskDto);
         }
 
         [HttpGet("{taskId:int}", Name = "GetTaskById")]
-        public async Task<IActionResult> GetTaskById(int taskId)
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TaskDto>> GetTaskById(int taskId)
         {
             var task = await _taskRepository.GetTaskById(taskId);
 
@@ -56,6 +64,10 @@ namespace TaskManager.Controllers
 
 
         [HttpPut("{taskId:int}", Name = "Put")]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Put([FromBody] TaskUpdateDto taskUpdateDto, int taskId)
         {
 
@@ -66,7 +78,7 @@ namespace TaskManager.Controllers
                 return NotFound();
             }
 
-            task.Title =  String.IsNullOrEmpty(taskUpdateDto.Title) ? task.Title : taskUpdateDto.Title;
+            task.Title = String.IsNullOrEmpty(taskUpdateDto.Title) ? task.Title : taskUpdateDto.Title;
             task.Description = String.IsNullOrEmpty(taskUpdateDto.Description) ? task.Description : taskUpdateDto.Description;
             task.Status = taskUpdateDto.Status;
 
@@ -78,6 +90,10 @@ namespace TaskManager.Controllers
 
 
         [HttpDelete("{taskId:int}", Name = "Delete")]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(int taskId)
         {
 
