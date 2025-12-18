@@ -14,7 +14,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      vmImage: 'ubuntu-latest'
+      name: WindowsSelfHosted
 
     steps:
     - task: UseDotNet@2
@@ -45,7 +45,7 @@ stages:
   jobs:
   - job: Deploy
     pool:
-      vmImage: 'ubuntu-latest'
+      name: WindowsSelfHosted
 
     steps:
     - download: current
