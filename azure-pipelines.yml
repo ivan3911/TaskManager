@@ -1,0 +1,58 @@
+trigger:
+- main
+
+variables:
+  buildConfiguration: 'Release'
+  dotnetVersion: '8.0.x'
+  azureSubscription: 'azure-service-connection'
+  appServiceName: 'task-manager'
+  artifactName: 'drop'
+
+stages:
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: sdk
+        version: $(dotnetVersion)
+
+    - script: dotnet restore
+      displayName: Restore
+
+    - script: dotnet build --configuration $(buildConfiguration) --no-restore
+      displayName: Build
+
+    - script: dotnet test --configuration $(buildConfiguration) --no-build
+      displayName: Test
+
+    - script: dotnet publish -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
+      displayName: Publish
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: $(artifactName)
+
+- stage: Deploy
+  displayName: Deploy
+  dependsOn: Build
+  jobs:
+  - job: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - download: current
+      artifact: $(artifactName)
+
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appServiceName)
+        package: $(Pipeline.Workspace)/$(artifactName)
