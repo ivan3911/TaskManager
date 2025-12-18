@@ -1,28 +1,28 @@
 # Proyecto Task Manager
-El proposito del proyecto fue Generar APIs REST en NET Core simulando la generaciÛn de tareas. se realizÛ el diseÒo, creaciÛn de la BD, y desarrollo de las APIS. La informaciÛn se muestra a travÈs de swagger, pero pueden ser consumidas desde cualquier aplicaciÛn de terceros (Postman, Insomnia, Hoppscotch, etc).
+El proposito del proyecto fue Generar APIs REST en NET Core simulando la generaci√≥n de tareas. se realiz√≥ el dise√±o, creaci√≥n de la BD, y desarrollo de las APIS. La informaci√≥n se muestra a trav√©s de swagger, pero pueden ser consumidas desde cualquier aplicaci√≥n de terceros (Postman, Insomnia, Hoppscotch, etc).
 
 Dentro del proyecto se considera lo siguiente:
 
-* El tipo de proyecto generado es de tipo **Web API Net Core** usando la versiÛn de .NET 8.
+* El tipo de proyecto generado es de tipo **Web API Net Core** usando la versi√≥n de .NET 8.
 
-* Se uso la metodologÌa de **CodeFirst** para la generaciÛn de la Base de dato.
+* Se uso la metodolog√≠a de **CodeFirst** para la generaci√≥n de la Base de dato.
 
-* Se realizÛ la implementaciÛn del **PatrÛn repository** dentro del proyecto.
+* Se realiz√≥ la implementaci√≥n del **Patr√≥n repository** dentro del proyecto.
 
 * Se hizo uso de las **Migrations** para la BD en SQL Server.
 
 * Se hace uso **Dependency Injection** para los servicios de **DbContext y Mapper**
 
-* Se realiza la implementaciÛn de **middleware** para manejo de respuestas HTTP adecuadas.
+* Se realiza la implementaci√≥n de **middleware** para manejo de respuestas HTTP adecuadas.
 
 * Se hace uso de **Fluent Validation** para validaciones en los payloads de entrada (Titulo no
 puede estar vacio, no se puede exceder mas de 50 caracteres, el status debe ser Pending,
 InProgress, o Completed).
 
-* Se realiza la documentaciÛn haciendo uso de Swagger por medio de los atributos y
+* Se realiza la documentaci√≥n haciendo uso de Swagger por medio de los atributos y
 decoradores que aparecen el controlador.
 
-## TecnologÌas utilizadas:
+## Tecnolog√≠as utilizadas:
 * .NET Core 8
 * .ORM Entity Framework Core 9
 
@@ -30,16 +30,14 @@ decoradores que aparecen el controlador.
 * .ASP.NET Core Web API
 * .Proyecto de BD SQL Server
 
-## EjecuciÛn del proyecto
+## Ejecuci√≥n del proyecto
 Una vez descargado el proyecto, sera necesario abrir el proyecto con Visual Studio 2022 ademas de tener SQL server en el equipo donde se realizara la prueba.
 
-Dentro del proyecto existe una migraciÛn de la BD, por lo que ser· necesario corroborar si el ConnectionString es de acuerdo al equipo en donde se esta probando. En otro caso se puede modificar en el archivo ìappsettings.Development.jsonî.
-
-https://github.com/ivan3911/TaskManager/blob/master/assets/ConnectionString.png
+Dentro del proyecto existe una migraci√≥n de la BD, por lo que ser√° necesario corroborar si el ConnectionString es de acuerdo al equipo en donde se esta probando. En otro caso se puede modificar en el archivo ‚Äúappsettings.Development.json‚Äù.
 
 ![ConnectionString](https://github.com/ivan3911/TaskManager/blob/master/assets/ConnectionString.png)
 
-Una vez que la ruta se encuentre de manera correcta, podemos dirigirnos hacia la consola del administrador de paquetes nuget y colocar la instrucciÛn ìupdate- databaseî como se muestra en la imagen siguiente.
+Una vez que la ruta se encuentre de manera correcta, podemos dirigirnos hacia la consola del administrador de paquetes nuget y colocar la instrucci√≥n ‚Äúupdate- database‚Äù como se muestra en la imagen siguiente.
 
 ![UpdateDatabase](https://github.com/ivan3911/TaskManager/blob/master/assets/UpdateDatabase.png)
 
@@ -62,16 +60,16 @@ Son considerados los siguientes paquetes dentro del proyecto.
 
    ![PackagesInProject](https://github.com/ivan3911/TaskManager/blob/master/assets/PackagesInProject.png)
 
-ImplementaciÛn del Patron Repository.
+Implementaci√≥n del Patron Repository.
 
    ![PatronRepository](https://github.com/ivan3911/TaskManager/blob/master/assets/PatronRepository.png)
 
 
-Uso de la inyecciÛn de dependencias.
+Uso de la inyecci√≥n de dependencias.
 
    ![DependecyInjection](https://github.com/ivan3911/TaskManager/blob/master/assets/DependecyInjection.png)
 
-ImplementaciÛn del middleware.
+Implementaci√≥n del middleware.
 
    ![Middleware](https://github.com/ivan3911/TaskManager/blob/master/assets/Middleware.png)
    
@@ -79,6 +77,6 @@ Validaciones con FluentValidation
 
    ![FluentValidation](https://github.com/ivan3911/TaskManager/blob/master/assets/FluentValidation.png)
 
-DocumentaciÛn Swagger
+Documentaci√≥n Swagger
 
    ![Swagger](https://github.com/ivan3911/TaskManager/blob/master/assets/Swagger.png)
