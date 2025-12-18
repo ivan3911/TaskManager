@@ -48,11 +48,14 @@ stages:
       name: WindowsSelfHosted
 
     steps:
-    - download: current
-      artifact: $(artifactName)
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: drop
+        path: $(Pipeline.Workspace)\drop
 
     - task: AzureWebApp@1
+      displayName: Deploy to Azure App Service
       inputs:
         azureSubscription: $(azureSubscription)
         appName: $(appServiceName)
-        package: $(Pipeline.Workspace)/$(artifactName)
+        package: $(Pipeline.Workspace)\drop
